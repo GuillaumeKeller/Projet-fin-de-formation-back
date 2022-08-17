@@ -34,10 +34,4 @@ class Moderateur
 
  
 }
-
-
-
-
-
-
 ?>
