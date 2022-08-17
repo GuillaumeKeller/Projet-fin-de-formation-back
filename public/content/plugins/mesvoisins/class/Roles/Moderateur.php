@@ -2,21 +2,24 @@
 
 namespace Mesvoisins\Roles;
 
-class Voisin
+class Moderateur
 {
 
-    const KEY = "Voisin";
+    const KEY = "Moderateur";
 
     static public function register()
     {
         add_role(
             self::KEY, 
-            "Voisin", 
+            "Moderateur", 
             [
                 "read"              => true,
                 "edit_posts"        => true, 
                 "publish_posts"     => true,
-                "manage_categories" => false,
+                "manage_categories" => true,
+                "remove_users"      => true,
+                "delete_posts"      => true,
+                "edit_users"        => true,
 
             ]);
         
