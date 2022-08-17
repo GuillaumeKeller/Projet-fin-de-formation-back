@@ -5,6 +5,7 @@
   use Mesvoisins\PostTypes\Ad;
   use Mesvoisins\Roles\Voisin;
   use Mesvoisins\Roles\Moderateur;
+  use Mesvoisins\Taxonomies\Types;
 
 
 class Plugin
@@ -23,12 +24,18 @@ class Plugin
     {
         //* Register CPT
         Ad::register();
+
+        Types::register();
     }
 
     public function onActivation()
     {
      Voisin::register();
      Moderateur::register();
+    
+     Types::register();
+     wp_insert_term("Offre", Types::KEY);
+     wp_insert_term("Demande", Types::KEY);
 
     }
 
