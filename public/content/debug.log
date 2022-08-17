@@ -1,0 +1,14 @@
+[17-Aug-2022 09:52:44 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Mesvoisins\Plugin' does not have a method 'onDeactivation' in /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/class-wp-hook.php on line 307
+[17-Aug-2022 09:52:44 UTC] PHP Stack trace:
+[17-Aug-2022 09:52:44 UTC] PHP   1. {main}() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/plugins.php:0
+[17-Aug-2022 09:52:44 UTC] PHP   2. deactivate_plugins() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/plugins.php:209
+[17-Aug-2022 09:52:44 UTC] PHP   3. do_action() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/includes/plugin.php:812
+[17-Aug-2022 09:52:44 UTC] PHP   4. WP_Hook->do_action() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/plugin.php:474
+[17-Aug-2022 09:52:44 UTC] PHP   5. WP_Hook->apply_filters() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/class-wp-hook.php:331
+[17-Aug-2022 09:52:46 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, class 'Mesvoisins\Plugin' does not have a method 'onActivation' in /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/class-wp-hook.php on line 307
+[17-Aug-2022 09:52:46 UTC] PHP Stack trace:
+[17-Aug-2022 09:52:46 UTC] PHP   1. {main}() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/plugins.php:0
+[17-Aug-2022 09:52:46 UTC] PHP   2. activate_plugin() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/plugins.php:58
+[17-Aug-2022 09:52:46 UTC] PHP   3. do_action() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-admin/includes/plugin.php:689
+[17-Aug-2022 09:52:46 UTC] PHP   4. WP_Hook->do_action() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/plugin.php:474
+[17-Aug-2022 09:52:46 UTC] PHP   5. WP_Hook->apply_filters() /var/www/html/apo/projet-mes-voisins-back/public/wp/wp-includes/class-wp-hook.php:331
