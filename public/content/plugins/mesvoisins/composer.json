@@ -1,0 +1,14 @@
+{
+    "autoload": {
+
+        "psr-4" :{
+            "Mesvoisins\\": "./class"
+        }
+        
+    },
+
+    "config": {
+        "vendor-dir": "vendor-mesvoisins"
+    }
+
+}
