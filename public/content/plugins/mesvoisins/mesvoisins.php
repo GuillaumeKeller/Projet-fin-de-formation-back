@@ -1,12 +1,23 @@
- <?php
- 
- /**
- * Plugin Name:  MesVoisins
- * Description:  Allows you to manage content for "Mes Voisins" project
- * Version:      0.0.1
- * Author:       Simon & Farrah
- * Requires Php: ^7.4
- * 
- **/
+<?php
 
- ?>
+use Mesvoisins\Plugin;
+
+ /**
+  * Plugin Name: MesVoisins
+  * Author: Farrah et Simon
+  * Version: 0.0.1
+  * Description: Plugin pour le site Mesvoisins
+
+  */
+
+  //* Autoload
+  require __DIR__ . "/vendor-mesvoisins/autoload.php";
+
+  // * Entry point
+  define("MESVOISINS_ENTRY_FILE",__FILE__);
+
+  // * Plugin class
+  $mesvoisins = new Plugin();
+
+
+?>
