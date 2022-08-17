@@ -3,6 +3,7 @@
   namespace Mesvoisins;
 
   use Mesvoisins\PostTypes\Ad;
+  use Mesvoisins\Roles\Voisin;
 
 
 class Plugin
@@ -25,12 +26,12 @@ class Plugin
 
     public function onActivation()
     {
-     
+     Voisin::register();
     }
 
     public function onDeactivation()
     {
-      
+        Voisin::unregister();
 
     }
 }
