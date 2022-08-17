@@ -4,6 +4,7 @@
 
   use Mesvoisins\PostTypes\Ad;
   use Mesvoisins\Roles\Voisin;
+  use Mesvoisins\Roles\Moderateur;
 
 
 class Plugin
@@ -27,11 +28,14 @@ class Plugin
     public function onActivation()
     {
      Voisin::register();
+     Moderateur::register();
+
     }
 
     public function onDeactivation()
     {
         Voisin::unregister();
+        Moderateur::register();
 
     }
 }
