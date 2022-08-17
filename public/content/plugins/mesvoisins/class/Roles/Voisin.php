@@ -16,7 +16,7 @@ class Voisin
                 "read"              => true,
                 "edit_posts"        => true, 
                 "publish_posts"     => true,
-                "manage_categories" => true,
+                "manage_categories" => false,
 
             ]);
         
