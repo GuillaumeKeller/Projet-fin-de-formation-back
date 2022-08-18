@@ -7,6 +7,7 @@
   use Mesvoisins\Roles\Moderator;
   use Mesvoisins\Taxonomies\Types;
   use Mesvoisins\Taxonomies\Categories;
+  use Mesvoisins\Taxonomies\Status;
 
 
 class Plugin
@@ -28,6 +29,7 @@ class Plugin
 
         Types::register();
         Categories::register();
+        Status::register();
     }
 
     public function onActivation()
@@ -42,6 +44,10 @@ class Plugin
         Categories::register();
         wp_insert_term("Service", Categories::KEY);
         wp_insert_term("Matériel", Categories::KEY);
+
+        Status::register();
+        wp_insert_term("Active", Status::KEY);
+        wp_insert_term("Archivée", Status::KEY);
     }
 
     public function onDeactivation()
