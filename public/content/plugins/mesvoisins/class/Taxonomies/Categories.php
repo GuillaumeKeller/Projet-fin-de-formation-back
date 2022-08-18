@@ -3,9 +3,9 @@
 namespace Mesvoisins\Taxonomies;
 use       Mesvoisins\PostTypes\Ad;
 
-class Types
+class Categories
 {
-    const KEY = "AdType";
+    const KEY = "AdCategory";
 
     static public function register()
     {
@@ -13,7 +13,7 @@ class Types
             self::KEY, 
             [Ad::KEY],
             [
-                "label"         => "Types",
+                "label"         => "Catégories",
                 "hierarchical"  => false,
                 "public"        => true,
                 "show_in_rest"  => true,

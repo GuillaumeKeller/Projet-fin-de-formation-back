@@ -21,12 +21,14 @@ class Ad
                     "title",
                     "author",
                     "thumbnail",
+                    "editor",
                     "comments",
                     "excerpt",
-                    "editor"
+                    
                 ],
                 // *The string to use to build the read, edit, and delete capabilities
-                "capabilities" => [/* TODO */],
+                "capabilities" => [],
+                
 
                 // * Whether to use the internal default meta capability handling
                 // * Here the stantards admin role is able to edite posts types
