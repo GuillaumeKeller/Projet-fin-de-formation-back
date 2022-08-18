@@ -2,7 +2,7 @@
 
 namespace Mesvoisins\Roles;
 
-class Voisin
+class Neighbour
 {
 
     const KEY = "Voisin";

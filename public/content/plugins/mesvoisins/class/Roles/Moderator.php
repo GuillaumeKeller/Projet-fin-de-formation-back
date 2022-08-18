@@ -2,7 +2,7 @@
 
 namespace Mesvoisins\Roles;
 
-class Moderateur
+class Moderator
 {
 
     const KEY = "Moderateur";

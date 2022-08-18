@@ -3,8 +3,8 @@
   namespace Mesvoisins;
 
   use Mesvoisins\PostTypes\Ad;
-  use Mesvoisins\Roles\Voisin;
-  use Mesvoisins\Roles\Moderateur;
+  use Mesvoisins\Roles\Neighbour;
+  use Mesvoisins\Roles\Moderator;
   use Mesvoisins\Taxonomies\Types;
 
 
@@ -30,8 +30,8 @@ class Plugin
 
     public function onActivation()
     {
-     Voisin::register();
-     Moderateur::register();
+     Neighbour::register();
+     Moderator::register();
     
      Types::register();
      wp_insert_term("Offre", Types::KEY);
@@ -41,8 +41,8 @@ class Plugin
 
     public function onDeactivation()
     {
-        Voisin::unregister();
-        Moderateur::register();
+        Neighbour::unregister();
+        Moderator::register();
 
     }
 }
