@@ -23,7 +23,7 @@ class Plugin
         add_action("init", [$this,"onInit"]);
         
         
-
+        add_action("rest_api_init", [$this,"onRestApiInit"]);
 
         //*Activate deactivate plugin
         register_activation_hook(MESVOISINS_ENTRY_FILE, [$this,"onActivation"]);
@@ -66,9 +66,6 @@ class Plugin
         $modelController->insertData();
 
         
-
-
-        
     }
 
     public function onDeactivation()
@@ -80,10 +77,12 @@ class Plugin
         $modelController->deleteTable();
     }
 
+    
+
     public function onRestApiInit()
     {
-        // $controller = new UserDataController();
-        // $controller->registerRoutes();
+        $controller = new UserDataController();
+         $controller->registerRoutes();
     }
 }
 ?>
