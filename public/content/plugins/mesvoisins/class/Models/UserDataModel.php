@@ -39,7 +39,7 @@ class UserDataModel extends CoreModel
             'postal_code' => $postal_code,
             'phone' => $phone,
             'email' => $email,
-            'created_at' => date( "Y-m-d H:i:s" ),
+            // 'created_at' => date( "Y-m-d H:i:s" ),
         ];
 
         $this->wpdb->insert(
