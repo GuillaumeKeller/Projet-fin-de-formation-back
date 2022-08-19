@@ -2,24 +2,36 @@
 
   namespace Mesvoisins;
 
-  use Mesvoisins\PostTypes\Ad;
+use Mesvoisins\Controllers\UserDataController;
+use Mesvoisins\PostTypes\Ad;
   use Mesvoisins\Roles\Neighbour;
   use Mesvoisins\Roles\Moderator;
   use Mesvoisins\Taxonomies\Types;
   use Mesvoisins\Taxonomies\Categories;
   use Mesvoisins\Taxonomies\Status;
+  
+  
+  
 
 
 class Plugin
 {
     public function __construct()
     {
+
+        //* Initiate the plugin
+        add_action("init", [$this,"onInit"]);
+        
+        
+
+
         //*Activate deactivate plugin
         register_activation_hook(MESVOISINS_ENTRY_FILE, [$this,"onActivation"]);
         register_deactivation_hook(MESVOISINS_ENTRY_FILE, [$this,"onDeactivation"]);
 
-        //* Initiate the plugin
-        add_action("init", [$this,"onInit"]);
+        
+
+        
     }
 
     public function onInit()
@@ -48,12 +60,30 @@ class Plugin
         Status::register();
         wp_insert_term("Active", Status::KEY);
         wp_insert_term("Archivée", Status::KEY);
+
+        $modelController = new UserDataController();
+        $modelController->createTable();
+        $modelController->insertData();
+
+        
+
+
+        
     }
 
     public function onDeactivation()
     {
         Neighbour::unregister();
         Moderator::register();
+
+        $modelController = new UserDataController();
+        $modelController->deleteTable();
+    }
+
+    public function onRestApiInit()
+    {
+        // $controller = new UserDataController();
+        // $controller->registerRoutes();
     }
 }
 ?>
