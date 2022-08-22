@@ -82,8 +82,8 @@ class Plugin
 
     public function onRestApiInit()
     {
-        // $controller = new UserDataController();
-        // $controller->registerRoutes();
+        $controller = new UserDataController();
+        $controller->registerRoutes();
     }
 }
 ?>
