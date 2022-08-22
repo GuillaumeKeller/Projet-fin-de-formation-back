@@ -2,6 +2,8 @@
 
 namespace Mesvoisins\Models;
 
+use WP_REST_Request;
+
 class UserDataModel extends CoreModel
 {
     const TABLE = 'user_data';
@@ -47,7 +49,47 @@ class UserDataModel extends CoreModel
              $data
             );
     }
-    
 
+      // Get content of user_data table by user_id
+  public function findByID( WP_REST_Request $request)
+  {
+    $users = $request->get_url_params('id');
+    $userID = $users['id'];
+        
+    $sql = "SELECT * FROM `user_data` 
+            WHERE `user_id` = ".$userID.";";
+
+    $results = $this->wpdb->get_results( $sql );
+    
+   // Fill up the array with the results
+    $output = [];
+    foreach ($results as $result) {
+        // var_dump($result);
+
+        $output[] = [
+            'user_id' => $result->user_id,
+            'address' => $result->address,
+            'city' => $result->city,
+            'postal_code' => $result->postal_code,
+            'phone' => $result->phone,
+            'email' => $result->email,
+            // 'created_at' => date( "Y-m-d H:i:s" ),
+        ];
+        
+    }
+    return $output;
+}
+
+
+public function DeleteById(WP_REST_Request $request)
+    {
+    $users = $request->get_url_params('id');
+    $userID = $users['id'];
+          
+      $sql = "DELETE FROM `user_data` 
+              WHERE `user_id` = ".$userID.";";
+  
+     $this->wpdb->query( $sql );
+}
         
 }

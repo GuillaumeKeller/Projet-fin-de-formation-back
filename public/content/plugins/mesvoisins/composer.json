@@ -9,6 +9,8 @@
 
     "config": {
         "vendor-dir": "vendor-mesvoisins"
+    },
+    "require": {
+        "symfony/var-dumper": "^5.4"
     }
-
 }
