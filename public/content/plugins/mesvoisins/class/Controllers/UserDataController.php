@@ -27,26 +27,25 @@ class UserDataController extends CoreController
 
     $model = new UserDataModel();
     $model->insert(2,'15 rue des pommes', 'Caen', 14000, '0606060606', 'tonton@tonton.com');
+    $model->insert(1,'15 rue des pommes', 'Lyon', 69000, '0606060606', 'coucou@mail.com');
 
 
+    }
+
+    public function findUser($id)
+    {
+        $model = new UserDataModel();
+        $user = $model->findByID($id);
+        return $user;
     }
 
     
-
-    public function findByID(WP_REST_Request $request)
-    {
-        $users = get_users(['user' =>  $request['id'], ]);
-        return $users;
-    }
-
-   
-
 
 
     public function registerRoutes()
     {
         register_rest_route('mesvoisins/v1', '/userdata/', [
-            'methods' => WP_REST_Server::READABLE,
+            'methods' => 'GET',
             'callback' => function(){
                 global $wpdb;
                 $sql = "SELECT * FROM `user_data`";
@@ -58,10 +57,12 @@ class UserDataController extends CoreController
             
             
         ]);
+        
 
+        // API REST route for user_data/id
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)', [
             'methods' => WP_REST_Server::READABLE,
-            'callback' => [$this, 'findByID'],
+            'callback' => [$this,'findUser'],
             
         ]);
 
