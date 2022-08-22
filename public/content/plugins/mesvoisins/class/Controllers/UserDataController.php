@@ -3,6 +3,7 @@
 namespace Mesvoisins\Controllers;
 
 use Mesvoisins\Models\UserDataModel;
+use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
@@ -30,6 +31,18 @@ class UserDataController extends CoreController
 
     }
 
+    
+
+    public function findByID(WP_REST_Request $request)
+    {
+        $users = get_users(['user' =>  $request['id'], ]);
+        return $users;
+    }
+
+   
+
+
+
     public function registerRoutes()
     {
         register_rest_route('mesvoisins/v1', '/userdata/', [
@@ -41,8 +54,18 @@ class UserDataController extends CoreController
 
                 return $list;
             },
+
+            
             
         ]);
+
+        register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)', [
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => [$this, 'findByID'],
+            
+        ]);
+
+       
     }
 
     
