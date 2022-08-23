@@ -2,8 +2,8 @@
 
   namespace Mesvoisins;
 
-use Mesvoisins\Controllers\UserDataController;
-use Mesvoisins\PostTypes\Ad;
+  use Mesvoisins\Controllers\UserDataController;
+  use Mesvoisins\PostTypes\Ad;
   use Mesvoisins\Roles\Neighbour;
   use Mesvoisins\Roles\Moderator;
   use Mesvoisins\Taxonomies\Types;
@@ -27,6 +27,7 @@ class Plugin
         //*Activate deactivate plugin
         register_activation_hook(MESVOISINS_ENTRY_FILE, [$this,"onActivation"]);
         register_deactivation_hook(MESVOISINS_ENTRY_FILE, [$this,"onDeactivation"]);
+
     }
 
     public function onInit()
@@ -77,6 +78,8 @@ class Plugin
         $controller = new UserDataController();
         $controller->registerRoutes();
     }
+
+    
 }
 
 ?>
