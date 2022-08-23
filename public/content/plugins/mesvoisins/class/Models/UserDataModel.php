@@ -2,10 +2,14 @@
 
 namespace Mesvoisins\Models;
 
+
 use Symfony\Component\VarDumper\VarDumper;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
+
+use WP_REST_Request;
+
 
 class UserDataModel extends CoreModel
 {
@@ -59,6 +63,7 @@ class UserDataModel extends CoreModel
     }
 
 
+
     // *-------------------------------
     // *          USER                 
     // * ------------------------------
@@ -74,10 +79,47 @@ class UserDataModel extends CoreModel
 
     $results = $this->wpdb->get_results( $sql );
     
+
+      // Get content of user_data table by user_id
+  public function findByID( WP_REST_Request $request)
+  {
+
+   
+    
+        $users = $request->get_url_params('id');
+        $userID = $users['id'];
+        
+         
+    
+    $sql = "SELECT * FROM `user_data` 
+            WHERE `user_id` = ".$userID.";";
+
+    
+    $results = $this->wpdb->get_results( $sql );
+    
+
    // Fill up the array with the results
     $output = [];
     foreach ($results as $result) {
         // var_dump($result);
+
+
+
+        $user= get_users($userID);       
+        $output[] = [
+            'user_id' => $result->user_id,
+            'address' => $result->address,
+            'city' => $result->city,
+            'postal_code' => $result->postal_code,
+            'phone' => $result->phone,
+            'email' => $result->email,
+            // 'created_at' => date( "Y-m-d H:i:s" ),
+        ];
+        
+    }
+    return $output;
+}
+
 
         $output[] = [
             'user_id' => $result->user_id,

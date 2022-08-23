@@ -41,11 +41,13 @@ class UserDataController extends CoreController
     // *        USER                  
     // * ------------------------------
 
+
     public function findUser($id)
     {
         $model = new UserDataModel();
         $user = $model->findByID($id);
         return $user;
+
     }
 
     public function deleteUserData($id)
@@ -69,7 +71,9 @@ class UserDataController extends CoreController
     // *        ROUTES                 
     // * ------------------------------
 
-    
+  
+
+
     public function registerRoutes()
     {
         register_rest_route('mesvoisins/v1', '/userdata/', [
@@ -80,8 +84,17 @@ class UserDataController extends CoreController
                 $list = $wpdb->get_results($sql);
 
                 return $list;
+
             },  
         ]);
+
+            },
+
+            
+            
+        ]);
+        
+
 
         // API REST route for user_data/id
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)', [
@@ -89,6 +102,7 @@ class UserDataController extends CoreController
             'callback' => [$this,'findUser'],
             
         ]);
+
 
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)/delete', [
             'methods' => WP_REST_Server::DELETABLE,
@@ -101,6 +115,7 @@ class UserDataController extends CoreController
             'callback' => [$this,'updateUserData'],
             
         ]);
+
        
     }
 
