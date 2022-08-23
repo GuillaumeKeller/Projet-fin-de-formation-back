@@ -88,14 +88,6 @@ class UserDataController extends CoreController
             },  
         ]);
 
-            },
-
-            
-            
-        ]);
-        
-
-
         // API REST route for user_data/id
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)', [
             'methods' => WP_REST_Server::READABLE,
