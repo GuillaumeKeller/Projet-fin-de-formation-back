@@ -9,6 +9,11 @@ use WP_REST_Server;
 
 class UserDataController extends CoreController 
 {
+
+    // *-------------------------------
+    // *        TABLE                 
+    // * ------------------------------
+
     public function createTable()
     {
         $model = new UserDataModel();
@@ -32,12 +37,9 @@ class UserDataController extends CoreController
 
     }
 
-    public function deleteUserData($id)
-    {
-        $model = new UserDataModel();
-        $model -> DeleteById($id);
-
-    }
+    // *-------------------------------
+    // *        USER                  
+    // * ------------------------------
 
     public function findUser($id)
     {
@@ -46,9 +48,28 @@ class UserDataController extends CoreController
         return $user;
     }
 
+    public function deleteUserData($id)
+    {
+        $model = new UserDataModel();
+        $model -> DeleteById($id);
+
+    }
+
+    public function updateUserData($id)
+    {
+        // var_dump($id);die;
+        $model = new UserDataModel;
+        $model -> updateById($id);
+        
+    }
+
+
+
+    // *-------------------------------
+    // *        ROUTES                 
+    // * ------------------------------
+
     
-
-
     public function registerRoutes()
     {
         register_rest_route('mesvoisins/v1', '/userdata/', [
@@ -59,10 +80,7 @@ class UserDataController extends CoreController
                 $list = $wpdb->get_results($sql);
 
                 return $list;
-            },
-
-            
-            
+            },  
         ]);
 
         // API REST route for user_data/id
@@ -73,11 +91,16 @@ class UserDataController extends CoreController
         ]);
 
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)/delete', [
-            'methods' => WP_REST_Server::READABLE,
-            'callback' => [$this,'DeleteUserData'],
+            'methods' => WP_REST_Server::DELETABLE,
+            'callback' => [$this,'deleteUserData'],
             
         ]);
 
+        register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)/edit', [
+            'methods' => WP_REST_Server::EDITABLE,
+            'callback' => [$this,'updateUserData'],
+            
+        ]);
        
     }
 

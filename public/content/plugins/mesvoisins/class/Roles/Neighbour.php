@@ -21,7 +21,6 @@ class Neighbour
             ]);
         
 
-
     }
 
     static public function unregister()

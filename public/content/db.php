@@ -1,1 +1,0 @@
-/var/www/html/apo/projet-mes-voisins-back/public/content/plugins/query-monitor/wp-content/db.php
