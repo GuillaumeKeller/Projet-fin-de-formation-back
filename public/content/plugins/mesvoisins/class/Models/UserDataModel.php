@@ -27,6 +27,8 @@ class UserDataModel extends CoreModel
         $sql = "CREATE TABLE IF NOT EXISTS ". self::TABLE." (
 
         user_id INT NOT NULL,
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
         address VARCHAR(255) NOT NULL,
         city VARCHAR(255) NOT NULL,
         postal_code INT(5) NOT NULL,
@@ -44,10 +46,12 @@ class UserDataModel extends CoreModel
         $this->wpdb->query( $sql );
     }
 
-    public function insert($user_id, $address, $city, $postal_code, $phone, $email)
+    public function insert($user_id, $first_name, $last_name, $address, $city, $postal_code, $phone, $email)
     {
         $data = [
             'user_id' => $user_id,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
             'address' => $address,
             'city' => $city,
             'postal_code' => $postal_code,
@@ -96,6 +100,8 @@ class UserDataModel extends CoreModel
         $user= get_users($userID);       
         $output[] = [
             'user_id' => $result->user_id,
+            'first_name' => $result-> first_name,
+            'last_name' => $result -> last_name,
             'address' => $result->address,
             'city' => $result->city,
             'postal_code' => $result->postal_code,
@@ -137,7 +143,10 @@ class UserDataModel extends CoreModel
         $userID = $users['id'];
         
         $updatedData= 
-        ['address'          => $requestedData['address'],
+        [
+        'first_name'       => $requestedData['first_name'],
+        'last_name'        => $requestedData['last_name'],
+        'address'          => $requestedData['address'],
         'city'             => $requestedData['city'],
         'postal_code'      => $requestedData['postal_code'],
         'phone'            => $requestedData['phone'],

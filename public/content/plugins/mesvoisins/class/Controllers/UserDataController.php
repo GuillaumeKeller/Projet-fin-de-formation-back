@@ -31,8 +31,8 @@ class UserDataController extends CoreController
     {
 
     $model = new UserDataModel();
-    $model->insert(2,'15 rue des pommes', 'Caen', 14000, '0606060606', 'tonton@tonton.com');
-    $model->insert(1,'15 rue des pommes', 'Lyon', 69000, '0606060606', 'coucou@mail.com');
+
+    $model->insert(1, 'Farrah', 'Ferag', '15 rue des pommes', 'Lyon', 69000, '0606060606', 'coucou@mail.com');
 
 
     }
