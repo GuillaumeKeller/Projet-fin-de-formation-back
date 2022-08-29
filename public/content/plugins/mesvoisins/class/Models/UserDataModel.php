@@ -13,6 +13,7 @@ use WP_REST_Server;
 
 class UserDataModel extends CoreModel
 {
+    
 
     // *-------------------------------
     // *        TABLE                 
@@ -53,11 +54,20 @@ class UserDataModel extends CoreModel
     {
         
         global $wpdb;
-        $table_name = $wpdb->prefix . "user_data";
+        
         $requestedData = $request->get_json_params();
         
         
-        $data = [
+        
+
+        
+        
+       
+        $user = wp_create_user($requestedData['login'], $requestedData['password']);
+        //retourner l'id de l'utilisateur créé
+        $user_id = $user;
+         
+       $data = [
         'first_name'       => $requestedData['first_name'],
         'last_name'        => $requestedData['last_name'],
         'address'          => $requestedData['address'],
@@ -66,18 +76,27 @@ class UserDataModel extends CoreModel
         'phone'            => $requestedData['phone'],
         'email'            => $requestedData['email'],
         'password'         => $requestedData['password'],
-        'user_login'       => $requestedData['first_name'],
+        'user_login'       => $requestedData['login'],
+        'user_id'          => $user_id
         ];
+        
 
         
+
+         $sql = $wpdb->prepare("INSERT INTO user_data ( `user_id`, first_name, last_name, `address`,  city, postal_code, phone, email ) 
+         VALUES ( '".$user_id."', '".$requestedData['first_name']."', '".$requestedData['last_name']."', '".$requestedData['address']."', '".$requestedData['city']."', '".$requestedData['postal_code']."', '".$requestedData['phone']."', '".$requestedData['email']."' )");
+
+            $this->wpdb->query($sql);
+
+        
+
+
         
        
-        $user = wp_create_user($requestedData['first_name'], $requestedData['password']);
 
-        $sql = "INSERT INTO $table_name (first_name, last_name, address, city, postal_code, phone, email,) VALUES ('".$data['first_name']."', '".$data['last_name']."', '".$data['address']."', '".$data['city']."', '".$data['postal_code']."', '".$data['phone']."', '".$data['email']."', '".$data['user_login']."')";
-       $result = $this->wpdb->query($sql);
+       
 
-        // var_dump($result);
+        
 
        
     
@@ -140,12 +159,13 @@ class UserDataModel extends CoreModel
 
     public function deleteById(WP_REST_Request $request)
     {
+        global $wpdb;
         $users = $request->get_url_params('id');
         $userID = $users['id'];
         // var_dump(intval($userID));die;
             
-        $sql = "DELETE FROM `user_data` 
-                WHERE `user_id` = ".$userID.";";
+        $sql = $wpdb->prepare("DELETE FROM `user_data` 
+                WHERE `user_id` = ".$userID.";");
     
         // * Delete in 'user_data'
         $this->wpdb->query( $sql);

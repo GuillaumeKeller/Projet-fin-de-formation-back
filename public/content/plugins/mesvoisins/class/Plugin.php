@@ -59,7 +59,7 @@ class Plugin
 
         $modelController = new UserDataController();
         $modelController->createTable();
-        $modelController->insertData();
+        
     }
 
     public function onDeactivation()
