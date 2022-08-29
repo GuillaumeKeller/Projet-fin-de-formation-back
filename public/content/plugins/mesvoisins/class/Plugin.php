@@ -9,6 +9,7 @@
   use Mesvoisins\Taxonomies\Types;
   use Mesvoisins\Taxonomies\Categories;
   use Mesvoisins\Taxonomies\Status;
+  use Mesvoisins\Taxonomies\Location;
   
   
   
@@ -38,6 +39,7 @@ class Plugin
         Types::register();
         Categories::register();
         Status::register();
+        Location::register();
     }
 
     public function onActivation()
@@ -56,6 +58,9 @@ class Plugin
         Status::register();
         wp_insert_term("Active", Status::KEY);
         wp_insert_term("Archivée", Status::KEY);
+
+        Location::register();
+        wp_insert_term("Calvados", Location::KEY);
 
         $modelController = new UserDataController();
         $modelController->createTable();
