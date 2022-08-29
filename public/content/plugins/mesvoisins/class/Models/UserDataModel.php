@@ -46,25 +46,48 @@ class UserDataModel extends CoreModel
         $this->wpdb->query( $sql );
     }
 
-    public function insert($user_id, $first_name, $last_name, $address, $city, $postal_code, $phone, $email)
+   
+
+    // Ici je veux insérer des données dans ma table custom user_data en récupérant les données du formulaire de mon plugin
+    public function insertData(WP_REST_REQUEST $request)
     {
+        
+        global $wpdb;
+        $table_name = $wpdb->prefix . "user_data";
+        $requestedData = $request->get_json_params();
+        
+        
         $data = [
-            'user_id' => $user_id,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'address' => $address,
-            'city' => $city,
-            'postal_code' => $postal_code,
-            'phone' => $phone,
-            'email' => $email,
-            // 'created_at' => date( "Y-m-d H:i:s" ),
+        'first_name'       => $requestedData['first_name'],
+        'last_name'        => $requestedData['last_name'],
+        'address'          => $requestedData['address'],
+        'city'             => $requestedData['city'],
+        'postal_code'      => $requestedData['postal_code'],
+        'phone'            => $requestedData['phone'],
+        'email'            => $requestedData['email'],
+        'password'         => $requestedData['password'],
+        'user_login'       => $requestedData['first_name'],
         ];
 
-        $this->wpdb->insert(
-            self::TABLE,
-             $data
-            );
+        
+        
+       
+        $user = wp_create_user($requestedData['first_name'], $requestedData['password']);
+
+        $sql = "INSERT INTO $table_name (first_name, last_name, address, city, postal_code, phone, email,) VALUES ('".$data['first_name']."', '".$data['last_name']."', '".$data['address']."', '".$data['city']."', '".$data['postal_code']."', '".$data['phone']."', '".$data['email']."', '".$data['user_login']."')";
+       $result = $this->wpdb->query($sql);
+
+        // var_dump($result);
+
+       
+    
+       
+        
     }
+
+  
+
+
 
 
 
