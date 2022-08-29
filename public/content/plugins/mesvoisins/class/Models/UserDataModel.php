@@ -13,6 +13,7 @@ use WP_REST_Server;
 
 class UserDataModel extends CoreModel
 {
+    
 
     // *-------------------------------
     // *        TABLE                 
@@ -46,25 +47,66 @@ class UserDataModel extends CoreModel
         $this->wpdb->query( $sql );
     }
 
-    public function insert($user_id, $first_name, $last_name, $address, $city, $postal_code, $phone, $email)
-    {
-        $data = [
-            'user_id' => $user_id,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'address' => $address,
-            'city' => $city,
-            'postal_code' => $postal_code,
-            'phone' => $phone,
-            'email' => $email,
-            // 'created_at' => date( "Y-m-d H:i:s" ),
-        ];
+   
 
-        $this->wpdb->insert(
-            self::TABLE,
-             $data
-            );
+    // Ici je veux insérer des données dans ma table custom user_data en récupérant les données du formulaire de mon plugin
+    public function insertData(WP_REST_REQUEST $request)
+    {
+        
+        global $wpdb;
+        
+        $requestedData = $request->get_json_params();
+        
+        
+        
+
+        
+        
+       
+        $user = wp_create_user($requestedData['login'], $requestedData['password']);
+        //retourner l'id de l'utilisateur créé
+        $user_id = $user;
+         
+       $data = [
+        'first_name'       => $requestedData['first_name'],
+        'last_name'        => $requestedData['last_name'],
+        'address'          => $requestedData['address'],
+        'city'             => $requestedData['city'],
+        'postal_code'      => $requestedData['postal_code'],
+        'phone'            => $requestedData['phone'],
+        'email'            => $requestedData['email'],
+        'password'         => $requestedData['password'],
+        'user_login'       => $requestedData['login'],
+        'user_id'          => $user_id
+        ];
+        
+
+        
+
+         $sql = $wpdb->prepare("INSERT INTO user_data ( `user_id`, first_name, last_name, `address`,  city, postal_code, phone, email ) 
+         VALUES ( '".$user_id."', '".$requestedData['first_name']."', '".$requestedData['last_name']."', '".$requestedData['address']."', '".$requestedData['city']."', '".$requestedData['postal_code']."', '".$requestedData['phone']."', '".$requestedData['email']."' )");
+
+            $this->wpdb->query($sql);
+
+        
+
+
+        
+       
+
+       
+
+        
+
+       
+    
+       
+        
     }
+
+  
+
+
 
 
 
@@ -117,12 +159,13 @@ class UserDataModel extends CoreModel
 
     public function deleteById(WP_REST_Request $request)
     {
+        global $wpdb;
         $users = $request->get_url_params('id');
         $userID = $users['id'];
         // var_dump(intval($userID));die;
             
-        $sql = "DELETE FROM `user_data` 
-                WHERE `user_id` = ".$userID.";";
+        $sql = $wpdb->prepare("DELETE FROM `user_data` 
+                WHERE `user_id` = ".$userID.";");
     
         // * Delete in 'user_data'
         $this->wpdb->query( $sql);

@@ -27,19 +27,20 @@ class UserDataController extends CoreController
     }
 
 
-    public function insertData()
+    public function insertData(WP_REST_REQUEST $request)
     {
-
     $model = new UserDataModel();
-
-    $model->insert(1, 'Farrah', 'Ferag', '15 rue des pommes', 'Lyon', 69000, '0606060606', 'coucou@mail.com');
-
-
+    $model->insertData( $request );
+    
     }
+
+
+    
 
     // *-------------------------------
     // *        USER                  
     // * ------------------------------
+
 
 
     public function findUser($id)
@@ -86,6 +87,11 @@ class UserDataController extends CoreController
                 return $list;
 
             },  
+        ]);
+
+        register_rest_route('mesvoisins/v1', '/userdata/create', [
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => [$this,'insertData'],
         ]);
 
         // API REST route for user_data/id
