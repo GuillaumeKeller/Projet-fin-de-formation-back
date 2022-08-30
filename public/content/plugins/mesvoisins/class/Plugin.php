@@ -1,18 +1,18 @@
 <?php
 
-  namespace Mesvoisins;
+namespace Mesvoisins;
 
-  use Mesvoisins\Controllers\UserDataController;
-  use Mesvoisins\PostTypes\Ad;
-  use Mesvoisins\Roles\Neighbour;
-  use Mesvoisins\Roles\Moderator;
-  use Mesvoisins\Taxonomies\Types;
-  use Mesvoisins\Taxonomies\Categories;
-  use Mesvoisins\Taxonomies\Status;
-  use Mesvoisins\Taxonomies\Location;
-  
-  
-  
+use Mesvoisins\Controllers\UserDataController;
+use Mesvoisins\PostTypes\Ad;
+use Mesvoisins\Roles\Neighbour;
+use Mesvoisins\Roles\Moderator;
+use Mesvoisins\Taxonomies\Types;
+use Mesvoisins\Taxonomies\Categories;
+use Mesvoisins\Taxonomies\Status;
+use Mesvoisins\Taxonomies\Location;
+
+
+
 
 
 class Plugin
@@ -20,15 +20,14 @@ class Plugin
     public function __construct()
     {
         //* Initiate the plugin
-        add_action("init", [$this,"onInit"]);
+        add_action("init", [$this, "onInit"]);
+        add_action("init", [$this, "setupCors"]);
 
-
-        add_action("rest_api_init", [$this,"onRestApiInit"]);
+        add_action("rest_api_init", [$this, "onRestApiInit"]);
 
         //*Activate deactivate plugin
-        register_activation_hook(MESVOISINS_ENTRY_FILE, [$this,"onActivation"]);
-        register_deactivation_hook(MESVOISINS_ENTRY_FILE, [$this,"onDeactivation"]);
-
+        register_activation_hook(MESVOISINS_ENTRY_FILE, [$this, "onActivation"]);
+        register_deactivation_hook(MESVOISINS_ENTRY_FILE, [$this, "onDeactivation"]);
     }
 
     public function onInit()
@@ -64,7 +63,6 @@ class Plugin
 
         $modelController = new UserDataController();
         $modelController->createTable();
-        
     }
 
     public function onDeactivation()
@@ -80,11 +78,10 @@ class Plugin
 
     public function onRestApiInit()
     {
-        remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
-        add_filter( 'rest_pre_serve_request', [self::class, 'setupCors']);
+        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
         $controller = new UserDataController();
         $controller->registerRoutes();
-
     }
 
     /**
@@ -95,11 +92,8 @@ class Plugin
      */
     static public function setupCors()
     {
-        header( 'Access-Control-Allow-Origin: *' );
+        header('Access-Control-Allow-Origin: *');
         // header( 'Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS' );
         // header( 'Access-Control-Allow-Credentials: true' );
     }
-
-    
 }
-
