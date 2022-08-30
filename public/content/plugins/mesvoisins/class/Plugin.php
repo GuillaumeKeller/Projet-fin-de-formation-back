@@ -95,7 +95,7 @@ class Plugin
         add_filter( 'rest_pre_serve_request', [self::class, 'setupCors']);
 
         // ajouter la route custom pour enregistrer un utilisateur
-        "http://joffreyms-server.eddi.cloud/back/projet-mes-voisins-back/public/wp-json/mesvoisins/v1/userdata/create"::initRoute();
+        "http://joffreyms-server.eddi.cloud/back/projet-mes-voisins-back/public/wp-json/mesvoisins/v1/userdata/create";
     }
 
     /**
@@ -107,8 +107,8 @@ class Plugin
     static public function setupCors()
     {
         header( 'Access-Control-Allow-Origin: *' );
-        header( 'Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS' );
-        header( 'Access-Control-Allow-Credentials: true' );
+        // header( 'Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS' );
+        // header( 'Access-Control-Allow-Credentials: true' );
     }
 
     
