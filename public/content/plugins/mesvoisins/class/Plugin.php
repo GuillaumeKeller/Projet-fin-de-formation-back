@@ -21,7 +21,6 @@ class Plugin
     {
         //* Initiate the plugin
         add_action("init", [$this, "onInit"]);
-        add_action("init", [$this, "setupCors"]);
 
         add_action("rest_api_init", [$this, "onRestApiInit"]);
 
@@ -78,10 +77,11 @@ class Plugin
 
     public function onRestApiInit()
     {
-        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
-        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
         $controller = new UserDataController();
         $controller->registerRoutes();
+
+        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
     }
 
     /**
