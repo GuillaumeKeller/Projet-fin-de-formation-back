@@ -22,7 +22,7 @@ class Plugin
         //* Initiate the plugin
         add_action("init", [$this, "onInit"]);
 
-        add_action("rest_api_init", [$this, "corsHandler"], 15);
+        add_action("init", [$this, "corsHandler"], 15);
         add_action("rest_api_init", [$this, "onRestApiInit"]);
 
         //*Activate deactivate plugin
