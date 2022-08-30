@@ -84,6 +84,7 @@ class Plugin
         add_filter( 'rest_pre_serve_request', [self::class, 'setupCors']);
         $controller = new UserDataController();
         $controller->registerRoutes();
+
     }
 
     /**
