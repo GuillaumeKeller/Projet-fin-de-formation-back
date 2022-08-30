@@ -21,7 +21,7 @@ class Plugin
     {
         //* Initiate the plugin
         add_action("init", [$this, "onInit"]);
-        add_action("rest_api_init", [$this, "onRestApiInit"]);
+        add_action("rest_api_init", [$this, "onRestApiInit"], 15);
 
         //*Activate deactivate plugin
         register_activation_hook(MESVOISINS_ENTRY_FILE, [$this, "onActivation"]);
@@ -37,9 +37,6 @@ class Plugin
         Categories::register();
         Status::register();
         Location::register();
-
-        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
-        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
     }
 
     public function onActivation()
@@ -81,6 +78,9 @@ class Plugin
     {
         $controller = new UserDataController();
         $controller->registerRoutes();
+
+        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+        add_filter('rest_pre_serve_request', [$this, 'setupCors']);
     }
 
     /**
@@ -89,12 +89,11 @@ class Plugin
      *
      * @return void
      */
-    static public function setupCors($value)
+    static public function setupCors()
     {
+        header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
         header('Access-Control-Allow-Origin: *');
-        // header( 'Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS' );
+        header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
         // header( 'Access-Control-Allow-Credentials: true' );
-
-        return $value;
     }
 }
