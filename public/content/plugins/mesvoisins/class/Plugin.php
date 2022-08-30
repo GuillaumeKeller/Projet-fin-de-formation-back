@@ -84,7 +84,33 @@ class Plugin
         $controller->registerRoutes();
     }
 
+    /**
+   * Regroups all the actions to perform on WordPress rest_api_init hook
+    *
+    * @return void
+    */
+    static public function onRestInit()
+    {
+        remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+        add_filter( 'rest_pre_serve_request', [self::class, 'setupCors']);
+
+        // ajouter la route custom pour enregistrer un utilisateur
+        "http://joffreyms-server.eddi.cloud/back/projet-mes-voisins-back/public/wp-json/mesvoisins/v1/userdata/create"::initRoute();
+    }
+
+    /**
+     * setupCors()
+     * filters the Cross Origin Policy
+     *
+     * @return void
+     */
+    static public function setupCors()
+    {
+        header( 'Access-Control-Allow-Origin: *' );
+        header( 'Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS' );
+        header( 'Access-Control-Allow-Credentials: true' );
+    }
+
     
 }
 
-?>
