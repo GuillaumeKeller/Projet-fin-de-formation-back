@@ -21,8 +21,6 @@ class Plugin
     {
         //* Initiate the plugin
         add_action("init", [$this, "onInit"]);
-
-        add_action("init", [$this, "corsHandler"], 15);
         add_action("rest_api_init", [$this, "onRestApiInit"]);
 
         //*Activate deactivate plugin
@@ -39,6 +37,9 @@ class Plugin
         Categories::register();
         Status::register();
         Location::register();
+
+        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
     }
 
     public function onActivation()
@@ -80,12 +81,6 @@ class Plugin
     {
         $controller = new UserDataController();
         $controller->registerRoutes();
-    }
-
-    public function corsHandler()
-    {
-        remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
-        add_filter('rest_pre_serve_request', [self::class, 'setupCors']);
     }
 
     /**
