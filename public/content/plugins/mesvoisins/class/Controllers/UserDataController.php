@@ -29,9 +29,8 @@ class UserDataController extends CoreController
 
     public function insertData(WP_REST_REQUEST $request)
     {
-    $model = new UserDataModel();
-    $model->insertData( $request );
-    
+    	$model = new UserDataModel();
+    	return $model->insertData( $request );
     }
 
 
@@ -87,31 +86,33 @@ class UserDataController extends CoreController
                 return $list;
 
             },  
+            'permission_callback' => '__return_true',
         ]);
 
         register_rest_route('mesvoisins/v1', '/userdata/create', [
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => [$this,'insertData'],
+            'permission_callback' => '__return_true',
         ]);
 
         // API REST route for user_data/id
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)', [
             'methods' => WP_REST_Server::READABLE,
             'callback' => [$this,'findUser'],
-            
+            'permission_callback' => '__return_true',
         ]);
 
 
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)/delete', [
             'methods' => WP_REST_Server::DELETABLE,
             'callback' => [$this,'deleteUserData'],
-            
+            'permission_callback' => '__return_true',
         ]);
 
         register_rest_route('mesvoisins/v1', '/userdata/(?P<id>\d+)/edit', [
             'methods' => WP_REST_Server::EDITABLE,
             'callback' => [$this,'updateUserData'],
-            
+            'permission_callback' => '__return_true',
         ]);
 
        
