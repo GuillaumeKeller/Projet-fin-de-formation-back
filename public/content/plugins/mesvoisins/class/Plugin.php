@@ -26,6 +26,14 @@ class Plugin
         //*Activate deactivate plugin
         register_activation_hook(MESVOISINS_ENTRY_FILE, [$this, "onActivation"]);
         register_deactivation_hook(MESVOISINS_ENTRY_FILE, [$this, "onDeactivation"]);
+
+        add_filter( 'jwt_auth_whitelist', function ( $endpoints ) {
+            $mesvoisins_endpoints = array(
+                '/wp-json/mesvoisins/v1/userdata/create',
+            );
+        
+            return array_unique( array_merge( $endpoints, $mesvoisins_endpoints ) );
+        } );
     }
 
     public function onInit()
@@ -92,9 +100,9 @@ class Plugin
      */
     static public function setupCors()
     {
-        header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
+        // header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
         header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+        // header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
         // header( 'Access-Control-Allow-Credentials: true' );
     }
 }
