@@ -52,56 +52,32 @@ class UserDataModel extends CoreModel
     // Ici je veux insérer des données dans ma table custom user_data en récupérant les données du formulaire de mon plugin
     public function insertData(WP_REST_REQUEST $request)
     {
-        
         global $wpdb;
         
         $requestedData = $request->get_json_params();
-        
-        
-        
-
-        
-        
-       
-        $user = wp_create_user($requestedData['login'], $requestedData['password']);
+        $user = wp_create_user($requestedData['login'], $requestedData['password'], $requestedData['email']);
         //retourner l'id de l'utilisateur créé
-        $user_id = $user;
-         
-       $data = [
-        'first_name'       => $requestedData['first_name'],
-        'last_name'        => $requestedData['last_name'],
-        'address'          => $requestedData['address'],
-        'city'             => $requestedData['city'],
-        'postal_code'      => $requestedData['postal_code'],
-        'phone'            => $requestedData['phone'],
-        'email'            => $requestedData['email'],
-        'password'         => $requestedData['password'],
-        'user_login'       => $requestedData['login'],
-        'user_id'          => $user_id
+	$user_id = $user;
+	if (is_wp_error($user_id)) {
+       		return http_response_code(400);
+	}
+
+       	$data = [
+        	'user_id'          => $user_id,
+        	'first_name'       => $requestedData['first_name'],
+        	'last_name'        => $requestedData['last_name'],
+        	'address'          => $requestedData['address'],
+        	'city'             => $requestedData['city'],
+        	'postal_code'      => $requestedData['postal_code'],
+        	'phone'            => $requestedData['phone'],
+        	'email'            => $requestedData['email'],
         ];
         
+	if($this->wpdb->insert('user_data', $data) != false) {
+		return http_response_code(200);
+	}
 
-        
-
-         $sql = $wpdb->prepare("INSERT INTO user_data ( `user_id`, first_name, last_name, `address`,  city, postal_code, phone, email ) 
-         VALUES ( '".$user_id."', '".$requestedData['first_name']."', '".$requestedData['last_name']."', '".$requestedData['address']."', '".$requestedData['city']."', '".$requestedData['postal_code']."', '".$requestedData['phone']."', '".$requestedData['email']."' )");
-
-            $this->wpdb->query($sql);
-
-        
-
-
-        
-       
-
-       
-
-        
-
-       
-    
-       
-        
+	return http_response_code(400);
     }
 
   
