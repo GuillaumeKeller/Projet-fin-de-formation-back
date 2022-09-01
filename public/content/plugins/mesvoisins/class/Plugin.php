@@ -37,6 +37,7 @@ class Plugin
         Categories::register();
         Status::register();
         Location::register();
+
     }
 
     public function onActivation()
