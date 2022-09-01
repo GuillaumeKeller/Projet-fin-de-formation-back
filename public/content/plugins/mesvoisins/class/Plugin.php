@@ -29,7 +29,7 @@ class Plugin
 
         add_filter( 'jwt_auth_whitelist', function ( $endpoints ) {
             $mesvoisins_endpoints = array(
-                '/wp-json/mesvoisins/v1/userdata/create',
+                '/wp-json/mesvoisins/v1/userdata/*',
             );
         
             return array_unique( array_merge( $endpoints, $mesvoisins_endpoints ) );
