@@ -59,7 +59,9 @@ class UserDataModel extends CoreModel
         //retourner l'id de l'utilisateur créé
 	$user_id = $user;
 	if (is_wp_error($user_id)) {
-       		return 'L\'utilisateur existe déjà';
+
+       		return http_response_code(400);
+
 	}
 
        	$data = [
@@ -74,10 +76,13 @@ class UserDataModel extends CoreModel
         ];
         
 	if($this->wpdb->insert('user_data', $data) != false) {
-		return 'Utilisateur créé';
+
+		return http_response_code(200);
 	}
 
-	return 'Problème lors de la création de l\'utilisateur';
+	return http_response_code(400);
+
+	}
     }
 
   
