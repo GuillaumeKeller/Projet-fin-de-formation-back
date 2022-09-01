@@ -60,7 +60,7 @@ class UserDataModel extends CoreModel
 	$user_id = $user;
 	if (is_wp_error($user_id)) {
 
-       		return http_response_code(400);
+       		return new WP_REST_Response("L'utilisateur existe deja", 400);
 
 	}
 
@@ -77,18 +77,12 @@ class UserDataModel extends CoreModel
         
 	if($this->wpdb->insert('user_data', $data) != false) {
 
-		return http_response_code(200);
+		return new WP_REST_Response("Utilisateur cree", 200);
 	}
 
-	return http_response_code(400);
+	return new WP_REST_Response("Un probleme est survenu", 400);
 
 	}
-    }
-
-  
-
-
-
 
 
     // *-------------------------------
